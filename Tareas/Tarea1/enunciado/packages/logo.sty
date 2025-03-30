@@ -1,0 +1,39 @@
+% generates a first page with a logo, good for exams, programs, etc.
+% based on pucletter.sty  by 
+% Fritz Knabe <knabe@ing.puc.cl>
+\usepackage{epsfig} % For the logo
+
+\newcommand*{\puclogo}[1]{\def\logofilepath{#1}}
+\puclogo{puclogo}
+\setlength\headsep{.4in}
+\newcommand{\pageheadfont}{
+  \ifcase \@ptsize\relax
+    \large
+  \or
+    \large
+  \or
+    \large
+  \fi}
+
+\newlength{\pageheadwidth}
+\settowidth{\pageheadwidth}
+  {\pageheadfont PONTIFICIA UNIVERSIDAD CATOLICA DE CHILE}
+\addtolength{\pageheadwidth}{0.5cm}
+
+\newlength{\pageheadindent} % To be used as hspace before the logo
+\addtolength{\pageheadindent}{-\oddsidemargin} % Yields 1in margin
+\addtolength{\pageheadindent}{-.9cm} % Reduce the margin
+
+\def\ps@firstpage{%
+     \def\@oddhead{
+%           \noindent
+           
+           \raisebox{-1.4in}[\z@][\z@]{
+                 \epsfig{file=\logofilepath}}
+           \raisebox{-.65in}[\z@][\z@]{%
+             \parbox[t]{\pageheadwidth}%
+             {\centering\pageheadfont
+             PONTIFICIA UNIVERSIDAD CATOLICA DE CHILE \\
+             Escuela de Ingenier\'{\i}a\\
+             Departamento de Ciencia de la Computaci\'{o}n}}
+           \hspace{.5in}}}

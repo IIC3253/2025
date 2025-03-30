@@ -1,0 +1,39 @@
+%!TEX root = ../main/main.tex
+
+\section*{Instrucciones}
+
+Cualquier duda sobre la tarea se deberá hacer en los \emph{issues} del \href{https://github.com/IIC3253/2025}{repositorio del curso}. Los issues son el canal de comunicación oficial para todas las tareas.
+
+\paragraph{Configuración inicial.} 
+Para esta tarea utilizaremos \textit{github classroom}. 
+Para acceder a su repositorio privado debe ingresar a un link que le enviaremos a más tardar mañana, seleccionar su nombre y aceptar la invitación.
+El repositorio se creará automaticamente una vez que haga esto y lo podrá encontrar junto a los \href{https://github.com/orgs/IIC3253/repositories}{repositorios del curso}.
+
+\bigskip
+
+También deberá responder \href{https://docs.google.com/forms/d/e/1FAIpQLSfw9jbIkJt0bVT9Sz0m2lQi8AwtrWeJ8s68p8Cs0reU8h1dGQ/viewform?usp=dialog}{este formulario}, en el que se le pedirá una \textbf{llave simétrica} que será utilizada para encriptar sus notas y correcciones usando el esquema \href{https://en.wikipedia.org/wiki/Advanced_Encryption_Standard}{AES}.
+La llave debe tener como \textbf{máximo} un largo de 32 caracteres. En el repositorio del curso se publicará además el valor de hash de su llave utilizando \href{https://en.wikipedia.org/wiki/SHA-2}{SHA256}. Si usted pierde dicha llave podrá recuperarla incurriendo en una penalización de dos décimas en el promedio de sus tareas. Si otra persona descubre su llave antes de que se publiquen las notas de la segunda tarea, el promedio de tareas de dicha persona aumentará en cinco décimas, mientras que el suyo disminuirá en cinco décimas. 
+
+Recomendación: \textbf{Use un administrador de contraseñas}.
+
+%\newpage
+\paragraph{Entrega.} Al entregar esta tarea, su repositorio se deberá ver exactamente de la siguiente forma:
+
+\bigskip
+
+\dirtree{%
+.1 \faGithub \ Repositorio.
+.2 \faFolderOpenO \ \texttt{Tarea1}.
+.3 \faFolderOpenO \ \texttt{Pregunta1}.
+.4 \faFileO \ \texttt{cipher.txt}.
+.4 \faFileO \ \texttt{plain.txt}.
+.3 \faFolderOpenO \ \texttt{Pregunta2}.
+.4 \faFilePdfO \ \texttt{pregunta2.pdf}.
+.2 \faFileTextO \ \texttt{.gitignore}.
+.2 \faFileTextO \ \texttt{README.md}.
+.2 \faFolderO \ .git.
+}
+
+\bigskip
+
+Para cada problema cuya solución se deba entregar como un documento (en este caso la pregunta 2), deberá entregar un archivo \texttt{.pdf} que, o bien fue construido utilizando \LaTeX, o bien es el resultado de digitalizar un documento escrito a mano. En caso de optar por esta última opción, queda bajo su responsabilidad la legibilidad del documento. Respuestas que no puedan interpretar de forma razonable los ayudantes y profesores, ya sea por la caligrafía o la calidad de la digitalización, serán evaluadas con la nota mínima.
