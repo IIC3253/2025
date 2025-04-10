@@ -1,0 +1,39 @@
+%!TEX root = ../main/main.tex
+
+Sean $q$ y $n$ dos números naturales tales que $6 \leq q \leq n$, y sea $(\textit{Gen}, \textit{Enc}, \textit{Dec})$ un esquema criptográfico definido sobre los espacios $\mathcal{M} = \mathcal{C} = \{0,1\}^n$ y $\mathcal{K} = \{0, 1\}^{nq - 1}$. En esta pregunta usted debe demostrar que este esquema no es una pseudo-random permutation (PRP) con $q$ rondas. En particular, debe demostrar que el adversario gana el juego que define una PRP con una probabilidad mayor o igual a $\frac{1}{2} + \frac{1}{6}$.
+
+\paragraph{Corrección.}
+Esta pregunta se corrige considerando que se debe definir la
+estrategia del adversario que le permite ganar el juego de $q$ rondas
+que define una PRP con una probabilidad mayor o igual a $\frac{1}{2}
++ \frac{1}{6}$. La asignación de puntaje en esta pregunta es la
+siguiente.
+\begin{itemize}
+    \item{[1.5 puntos]} Sólo se entrega la definición de la estrategia
+    del adversario. Esta estrategía tiene elementos que efectivamente
+    podrían permitir al adversario ganar con una probabilidad
+    significativamente mayor a $\frac{1}{2}$, pero tiene algunos
+    errores.
+
+    \item{[3 puntos]} Se entrega una definición de la estrategia del
+    adversario que está correcta en el sentido de que le permite al
+    adversario ganar el juego con probabilidad mayor o igual a
+    $\frac{1}{2} + \frac{1}{6}$.
+
+    \item{[4.5 puntos]} Se entrega una definición de la estrategia del
+    adversario que está correcta en el sentido de que le permite al
+    adversario ganar el juego con probabilidad mayor o igual a
+    $\frac{1}{2} + \frac{1}{6}$. Además se explica por qué la
+    probabilidad de que el adversario gane el juego es mayor o igual a
+    $\frac{1}{2} + \frac{1}{6}$, pero no se entrega una demostración
+    completa de esta propiedad.
+
+
+    \item{[6 puntos]} Se entrega una definición de la estrategia del
+    adversario que está correcta en el sentido de que le permite al
+    adversario ganar el juego con probabilidad mayor o igual a
+    $\frac{1}{2} + \frac{1}{6}$. Además se entrega una demostración
+    formal de que la probabilidad de que el adversario gane el juego
+    es mayor o igual a $\frac{1}{2} + \frac{1}{6}$.
+\end{itemize}
+

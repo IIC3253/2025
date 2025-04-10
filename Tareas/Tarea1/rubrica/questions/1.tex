@@ -1,0 +1,29 @@
+%!TEX root = ../main/main.tex
+
+En esta pregunta usted deberá decriptar un mensaje que ha sido encriptado usando OTP, pero cometiendo el error de usar una llave más corta que el mensaje a encriptar.
+
+Los ayudantes crearán una rama en su repositorio personal llamada \emph{tarea-1}, que contendrá el archivo \texttt{/Tarea1/Pregunta1/cipher.txt}. Usted deberá decriptar el contenido de dicho archivo, y dejar un archivo \texttt{/Tarea1/Pregunta1/plain.txt} en la rama \texttt{main} de su repositorio a modo de solución. Este archivo deberá contener el texto plano original que fue encriptado. 
+
+En el \href{https://github.com/IIC3253/2025}{repositorio del curso} encontrará un ejemplo del archivo que subirán los ayudantes del curso a su repositorio personal, en \texttt{/Tareas/Tarea1/ejemplo\_pregunta\_1/cipher.txt}. También encontrará el archivo \texttt{/Tareas/Tarea1/ejemplo\_pregunta\_1/plain.txt}, que corresponde al texto plano original, ejemplificando lo que usted tendrá que entregar.
+
+\medskip
+
+\paragraph{Corrección.}
+
+Esta pregunta se corrige considerando cuánto se parece el mensaje entregado al texto que realmente se utilizó al momento de encriptar, y que el mensaje entregado sea efectivamente el resultado de decriptar el archivo \texttt{cipher.txt} con una llave de largo menor que el largo del contenido de dicho archivo.
+\begin{itemize}
+    \item{[1.5 puntos]} Se entrega un texto que resulta de decriptar \texttt{cipher.txt} con una llave más corta, y el texto que se entrega tiene características que pueden ser consideradas como estadísticamente relevantes. Sin embargo, el texto entregado no tiene un sentido claro. Por ejemplo, si alguien entrega un archivo que sólo contiene números, letras, espacios y puntuación, pero distribuidos de forma que no hacen sentido, y el archivo efectivamente se obtiene como resultado de decriptar el texto cifrado con una llave más corta.
+
+    \item{[3 puntos]} El texto entregado coincide, byte a byte, al menos en un 30\% con el texto plano original.
+
+    \item{[4.5 puntos]} El texto entregado coincide, byte a byte, al menos en un 60\% con el texto plano original.
+
+    \item{[5 puntos]} El texto entregado coincide, byte a byte, al menos en un 90\% con el texto plano original.
+
+    \item{[5.8 puntos]} Se entrega un texto que coincide, byte a byte, al menos en un 95\% con el texto utilizado originalmente, pero dicho texto no se puede obtener en base a decriptar el texto cifrado con una llave más corta.
+
+    \item{[6 puntos]} Se entrega un texto que coincide, byte a byte, al menos en un 95\% con el texto utilizado originalmente, y dicho texto se obtiene en base a decriptar el texto cifrado con una llave más corta.
+\end{itemize}
+
+
+\medskip
