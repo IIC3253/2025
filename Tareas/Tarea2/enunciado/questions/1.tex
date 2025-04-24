@@ -1,15 +1,15 @@
 %!TEX root = ../main/main.tex
 
-Sea $\{h^n\}_{n \in \mathbb{N}}$ una familia de funciones resistente a colisiones tal que $h^n : \{0,1\}^{2n} \to \{0,1\}^{n}$. Supondremos también que esta familia es \textit{puzzle friendly}, lo que significa que no existe un algoritmo eficiente que, dados $u, v \in \{0,1\}^n$, construye $x \in \{0,1\}^n$ tal que $h^n(u \| x) = v$. Formalmente, la familia $\{h^n\}_{n \in \mathbb{N}}$ se dice \textit{puzzle
+Sea $\{h^n\}_{n \in \mathbb{N}}$ una familia de funciones de compresión resistente a colisiones tal que $h^n : \{0,1\}^{2n} \to \{0,1\}^{n}$. Supondremos también que esta familia es \textit{puzzle friendly}, lo que significa que no existe un algoritmo eficiente que, dados $u, v \in \{0,1\}^n$, construye $x \in \{0,1\}^n$ tal que $h^n(u \| x) = v$. Formalmente, la familia $\{h^n\}_{n \in \mathbb{N}}$ se dice \textit{puzzle
 friendly} si para cada algoritmo aleatorizado $\mathcal{A}:\{0,1\}^{2n} \to \{0,1\}^{n}$ que
 funciona en tiempo $o(2^n)$, se tiene que la probabilidad de que $h(u, \mathcal{A}(u,v))=v$ es despreciable.\footnote{Recuerde que una función $f(n)$ es $o(g(n))$ si se cumple que $(\forall c \in \mathbb{R}, c > 0)(\exists n_0 \in \mathbb{N})(\forall n \in \mathbb{N}, n \geq n_0)(f(n) \leq c \cdot g(n))$.}
 
 A partir de la familia $\{h^n\}_{n \in \mathbb{N}}$, definimos el
-protocolo {\bf EstablecerClave}($n$) que permite a dos usuarios $A$ y $B$
+protocolo {\bf EstablecerClave}($1^n$) que permite a dos usuarios $A$ y $B$
 establecer una clave de $n$ bits en un canal público, sin la necesidad de juntarse físicamente.
 
 \begin{flushleft}
-{\bf EstablecerClave}($n$)
+{\bf EstablecerClave}($1^n$)
 \begin{enumerate}
 %\item $A$ le envía a $B$ el largo $n$ de la clave, donde $n \geq 5$.
 
@@ -17,37 +17,37 @@ establecer una clave de $n$ bits en un canal público, sin la necesidad de junta
 Sea $P$ el conjunto de las primeras $n^2$ palabras en $\{0,1\}^n$, ordenadas por orden lexicográfico (definido por $0 < 1$), y sea $m = n \cdot \lceil \log n \rceil$. Por ejemplo, si $n = 5$, entonces $P=\{00000$, $00001$, $00010$, $\ldots$, $10110$, $10111$, $11000 \}$ y $m = 15$.
 \end{minipage}
 \begin{enumerate}
-\item[(1.1)] \begin{minipage}[t]{\linewidth} $A$ escoje $m$ palabras distintas $u_1$, $\ldots$, $u_m$ desde el conjunto $P$, calcula $a_i = h(0^n \| u_i)$ para cada $i \in \{1, \ldots, m\}$, y envía $(1,a_1)$, $\ldots$, $(m,a_m)$ a $B$.
+\item[(1.1)] \begin{minipage}[t]{\linewidth} $A$ escoge $m$ palabras distintas $u_1$, $\ldots$, $u_m$ desde el conjunto $P$, calcula $a_i = h(0^n \| u_i)$ para cada $i \in \{1, \ldots, m\}$, y envía $(1,a_1)$, $\ldots$, $(m,a_m)$ a $B$.
 \end{minipage}
 
-\item[(1.2)] $B$ escoje $m$ palabras distintas $v_1$, $\ldots$, $v_m$ desde el conjunto $P$, calcula $b_i = h(0^n \| v_i)$ para cada $i \in \{1, \ldots, m\}$, y envía $(1, b_1)$, $\ldots$, $(m, b_m)$ a $A$.
+\item[(1.2)] $B$ escoge $m$ palabras distintas $v_1$, $\ldots$, $v_m$ desde el conjunto $P$, calcula $b_i = h(0^n \| v_i)$ para cada $i \in \{1, \ldots, m\}$, y envía $(1, b_1)$, $\ldots$, $(m, b_m)$ a $A$.
 \end{enumerate}
 \item[(2)] \begin{minipage}[t]{\linewidth}
 Sea $I = \{ (i,j) \mid a_i = b_j\}$. Si $I = \emptyset$, entonces el protocolo falla. En otro caso, sea $(k, \ell)$ el menor elemento en $I$ en el orden lexicográfico sobre $\{1, \ldots, m\}^2$ definido por $1 < 2 < \dots < m$.
 \end{minipage}
 \begin{enumerate}
-\item[(2.1)] $A$ establece como clave $u_{k}$
-\item[(2.2)] $B$ establece como clave $v_\ell$ (que debería ser igual a $u_k$)
+\item[(2.1)] $A$ establece como clave $u_{k}$.
+\item[(2.2)] $B$ establece como clave $v_\ell$ (que debería ser igual a $u_k$).
 \end{enumerate}
 \end{enumerate}
 \end{flushleft}
 En esta pregunta usted va a analizar la complejidad de este protocolo,
 para lo cual va a considerar las operaciones entre bits (suma, resta,
 comparación, etc.) como las operaciones básicas en los algoritmos, las
-cuales tienen costo 1. Por ejemplo, verificiar si $u = v$ para dos
+cuales tienen costo 1. Por ejemplo, verificar si $u = v$ para dos
 palabras $u, v \in \{0,1\}^n$ toma tiempo $n$ ya que se deben realizar
 $n$ operaciones de comparación entre bits. En el análisis a realizar a
 continuación debe suponer que $h^n(u \| v)$ se calcula en tiempo
 $O(n)$, lo cual es cierto para las funciones de hash usuales.
 \begin{enumerate}
-\item La llamada {\bf EstablecerClave}($n$) falla tanto si no se tiene un par $(i, j)$ tal que $a_i = b_j$ como si $u_k \neq v_\ell$ (las claves secretas establecidas por $A$ y $B$ son distintas). Demuestre que existe una función despreciable $f(n)$ tal que:
+\item La llamada {\bf EstablecerClave}($1^n$) falla tanto si no se tiene un par $(i, j)$ tal que $a_i = b_j$ como si $u_k \neq v_\ell$ (las claves secretas establecidas por $A$ y $B$ son distintas). Demuestre que existe una función despreciable $f(n)$ tal que:
 \begin{eqnarray*}
-\Pr(\text{{\bf EstablecerClave}($n$) falle}) & \leq & f(n).
+\Pr(\text{{\bf EstablecerClave}($1^n$) falle}) & \leq & f(n).
 \end{eqnarray*}
 
 \item Suponga que {\bf EstablecerClave} no falla. Demuestre que $A$ y $B$ establecen una clave compartida en tiempo $O(n^2 \cdot \log^2 n)$.
 
-\item Suponga que {\bf EstablecerClave} no falla, y sea $\mathcal{A}$ un algoritmo que usa un atacante para descubrir la clave compartida entre $A$ y $B$. Demuestre que si $\mathcal{A}$ funciona en tiempo $o(n^3)$, entonces la probabilidad de que la repuesta entregada por $\mathcal{A}$ sea correcta es una función descreciable (como función del largo $n$ de la clave).
+\item Suponga que {\bf EstablecerClave} no falla, y sea $\mathcal{A}$ un algoritmo aleatorizado que usa un atacante para descubrir la clave compartida entre $A$ y $B$. Demuestre que si $\mathcal{A}$ funciona en tiempo $o(n^3)$, entonces la probabilidad de que la repuesta entregada por $\mathcal{A}$ sea correcta es una función despreciable (como función del largo $n$ de la clave).
 \end{enumerate}
 
 

@@ -1,7 +1,7 @@
 
 Sea $(\textit{Gen}, h)$ una función de hash tal que $\textit{Gen}(1^n) = n$ y  $h^n : \{0,1\}^* \to \{0,1\}^n$. El siguiente juego es utilizado para definir la propiedad de que $(\textit{Gen}, h)$ es resistente a modificaciones en la pre-imagen.
 
-{\bf PreImageModification($n$)}
+{\bf PreImageModification($1^n$)}
 \begin{itemize}
 \item El atacante define un algoritmo de tiempo polinomial $\mathcal{A}:\{0,1\}^*\rightarrow\{0,1\}^*$ tal que el largo de $\mathcal{A}(x)$ es mayor al largo de $x$ para todo $x\in\{0,1\}^*$.
 \item El atacante envía $\mathcal{A}$ al verificador.
@@ -14,11 +14,11 @@ Sea $(\textit{Gen}, h)$ una función de hash tal que $\textit{Gen}(1^n) = n$ y  
 \item El verificador envía $y$ al adversario.
 \item El adversario elige $b'\in\{0,1\}$, y gana si $b=b'$.
 \end{itemize}
-Decimos que una función de hash es resistente a modificaciones de pre-imagen si es que no existe un adversario que funcione en tiempo polinomial (en $n$) y que gane el juego {\bf PreImageModification($n$)} con una probabilidad no despreciable.
+Decimos que una función de hash es resistente a modificaciones de pre-imagen si es que no existe un adversario que funcione en tiempo polinomial (en $n$) y que gane el juego {\bf PreImageModification($1^n$)} con una probabilidad no despreciable.
 \begin{enumerate}
 \item Demuestre que las funciones de hash basadas en la construcción de Merkle-Damgård vista en clases no son seguras frente a modificaciones de pre-imagen.
 
-\item Programe en python un adversario que gane este juego para la función \texttt{SHA256}. Específicamente, deberá entregar un archivo \texttt{pregunta2\_b.py} que contenga dos funciones:
+\item Programe en Python un adversario que gane este juego para la función \texttt{SHA256}. Específicamente, deberá entregar un archivo \texttt{pregunta2\_b.py} que contenga dos funciones:
 \begin{itemize}
 \item \texttt{alg(str) -> str}. Esta función representa el algoritmo $\mathcal{A}$ que utilizará el adversario para ganar el juego definido más arriba para el caso de \texttt{SHA256}.
 \item \texttt{adv(x: str, y: str) -> bool}. Esta función representa a su adversario que, habiendo recibido $x$ e $y$ (ambos en $\{0,1\}^{256}$), deberá retornar verdadero si y sólo si $y=\texttt{SHA256}(\texttt{alg}(x))$.
