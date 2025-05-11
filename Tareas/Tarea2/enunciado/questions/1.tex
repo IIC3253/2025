@@ -1,13 +1,27 @@
 %!TEX root = ../main/main.tex
 
-Sea $\{h^n\}_{n \in \mathbb{N}}$ una familia de funciones de compresión resistente a colisiones tal que $h^n : \{0,1\}^{2n} \to \{0,1\}^{n}$. Supondremos también que esta familia es \textit{puzzle friendly}, lo que significa que no existe un algoritmo eficiente que, dados $u, v \in \{0,1\}^n$, construye $x \in \{0,1\}^n$ tal que $h^n(u \| x) = v$. Formalmente, la familia $\{h^n\}_{n \in \mathbb{N}}$ se dice \textit{puzzle
-friendly} si para cada algoritmo aleatorizado $\mathcal{A}:\{0,1\}^{2n} \to \{0,1\}^{n}$ que
-funciona en tiempo $o(2^n)$, se tiene que la probabilidad de que $h(u, \mathcal{A}(u,v))=v$ es despreciable.\footnote{Recuerde que una función $f(n)$ es $o(g(n))$ si se cumple que $(\forall c \in \mathbb{R}, c > 0)(\exists n_0 \in \mathbb{N})(\forall n \in \mathbb{N}, n \geq n_0)(f(n) \leq c \cdot g(n))$.}
+Sea $\{h^n\}_{n \in \mathbb{N}}$ una familia de funciones de
+compresión resistente a colisiones tal que $h^n
+: \{0,1\}^{2n} \to \{0,1\}^{n}$. Supondremos también que esta familia
+es \textit{puzzle friendly}, lo que significa que no existe un
+algoritmo eficiente que, dados $u, v \in \{0,1\}^n$, construye
+$x \in \{0,1\}^n$ tal que $h^n(u \| x) = v$. Formalmente, la familia
+$\{h^n\}_{n \in \mathbb{N}}$ se dice \textit{puzzle friendly} si para
+cada algoritmo aleatorizado $\mathcal{A}$ tal que:
+\begin{itemize}
+\item con entrada $u, v \in \{0,1\}^n$, el algoritmo $\mathcal{A}$ retorna un string $\mathcal{A}(u, v)$ de largo $n$; y 
+
+\item $\mathcal{A}$ funciona en tiempo $o(n \cdot 2^n)$,\footnote{Recuerde que una función $f(n)$ es $o(g(n))$ si se cumple que $(\forall c \in \mathbb{R}, c > 0)(\exists n_0 \in \mathbb{N})(\forall n \in \mathbb{N}, n \geq n_0)(f(n) \leq c \cdot g(n))$.}
+\end{itemize}
+se tiene que la siguiente probabilidad es despreciable, considerada como una función de $n$:
+\begin{eqnarray*}
+\max_{u, v \in \{0,1\}^n} \Pr(h^n(u \| \mathcal{A}(u,v))=v).
+\end{eqnarray*}
+
 
 A partir de la familia $\{h^n\}_{n \in \mathbb{N}}$, definimos el
 protocolo {\bf EstablecerClave}($1^n$) que permite a dos usuarios $A$ y $B$
 establecer una clave de $n$ bits en un canal público, sin la necesidad de juntarse físicamente.
-
 \begin{flushleft}
 {\bf EstablecerClave}($1^n$)
 \begin{enumerate}
