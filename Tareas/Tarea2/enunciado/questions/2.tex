@@ -14,7 +14,7 @@ Sea $(\textit{Gen}, h)$ una función de hash tal que $\textit{Gen}(1^n) = n$ y  
 \item El verificador envía $y$ al adversario.
 \item El adversario elige $b'\in\{0,1\}$, y gana si $b=b'$.
 \end{itemize}
-Decimos que una función de hash es resistente a modificaciones de pre-imagen si es que no existe un adversario que funcione en tiempo polinomial (en $n$) y que gane el juego {\bf PreImageModification($1^n$)} con una probabilidad no despreciable.
+Decimos que una función de hash es resistente a modificaciones de pre-imagen si es que no existe un adversario que funcione en tiempo polinomial (en $n$) y que gane el juego {\bf PreImageModification($1^n$)} con una probabilidad no despreciable.\footnote{Al igual que para los juegos vistos en clases, esto significa que el adversario no puede ganar {\bf PreImageModification($1^n$)} con una probabilidad $\frac{1}{2} + f(n)$, donde $f(n)$ es una función no despreciable.}
 \begin{enumerate}
 \item Demuestre que las funciones de hash basadas en la construcción de Merkle-Damgård vista en clases no son seguras frente a modificaciones de pre-imagen. En particular, para esta construcción considere la función de padding vista en clases, la cual es definida de la siguiente forma. Dado un mensaje $m$, sea $\ell = |m| \text{ mod } n$, y sea $m_1 \in \{0,1\}^n$ la representación como string binario del número $|m| \text{ mod } 2^n$. Si $\ell = 0$, entonces $\textit{Pad}(m) = m \| m_1$. Y si $\ell > 0$, entonces $\textit{Pad}(m) = m \| 1 0^{n - \ell - 1} \| m_1$.
 
