@@ -1,0 +1,80 @@
+%!TEX root = ../main/main.tex
+
+Sea $\{h^n\}_{n \in \mathbb{N}}$ una familia de funciones de
+compresión resistente a colisiones tal que $h^n
+: \{0,1\}^{2n} \to \{0,1\}^{n}$. Supondremos también que esta
+familia es \textit{puzzle friendly}, lo que significa que no existe un
+algoritmo eficiente que es capaz de encontrar una palabra $x$ que resuelve un puzzle
+$h^n(u \| x) = v$. Formalmente, un puzzle es un par $(u, v) \in \{0,1\}^{2n}$, y una solución para el puzzle es una palabra $x \in \{0, 1\}^n$ tal que $h(u \| x) = v$. Si existe tal $x$, se dice que el puzzle $(u,v)$ tiene solución. Con esta notación, la familia
+$\{h^n\}_{n \in \mathbb{N}}$ se dice \textit{puzzle friendly} si para cada
+ algoritmo aleatorizado $\mathcal{A}$ tal que:
+\begin{itemize}
+\item con entrada $(u, v) \in \{0,1\}^{2n}$, el algoritmo $\mathcal{A}$ retorna una palabra $\mathcal{A}(u, v) \in \{0,1\}^n$ o el símbolo $\bot$, 
+
+\item $\mathcal{A}$ realiza $o(n \cdot 2^n$) operaciones\footnote{Recuerde que una función $f(n)$ es $o(g(n))$ si se cumple que $(\forall c \in \mathbb{R}, c > 0)(\exists n_0 \in \mathbb{N})(\forall n \in \mathbb{N}, n \geq n_0)(f(n) \leq c \cdot g(n))$.} para cada entrada $u, v \in \{0,1\}^n$,
+\end{itemize}
+se tiene que la siguiente función de $n$ es despreciable:
+\begin{eqnarray*}
+\max_{v \in \{0,1\}^n} \Pr_{u \sim \mathbb{U}(\{0,1\}^n)}\big[\mathcal{A} \text{ soluciona el puzzle } (u,v)\big],
+\end{eqnarray*}
+donde $u \sim \mathbb{U}(\{0,1\}^n)$ indica que $u$ es escogido al azar con distribución uniforme desde el conjunto $\{0,1\}^n$, y $\mathcal{A}$ soluciona el puzzle $(u,v)$ si $\mathcal{A}(u,v) \in \{0,1\}^n$ y $h(u \| \mathcal{A}(u,v)) = v$ en caso de que el puzzle $(u,v)$ tenga solución, y $\mathcal{A}(u,v) = \bot$ en caso de que el puzzle $(u,v)$ no tenga solución.
+
+A partir de la familia $\{h^n\}_{n \in \mathbb{N}}$, definimos el
+protocolo {\bf EstablecerClave}($1^n$) que permite a dos usuarios $A$ y $B$
+establecer una clave de $n$ bits en un canal público, sin la necesidad de juntarse físicamente.
+\begin{flushleft}
+{\bf EstablecerClave}($1^n$)
+\begin{enumerate}
+\item[(1)] $A$ escoge con distribución uniforme $s \in \{0,1\}^n$, y se lo envía a $B$.
+
+\item[(2)] \begin{minipage}[t]{\linewidth}
+Sea $P$ el conjunto de las primeras $n^2$ palabras en $\{0,1\}^n$, ordenadas por orden lexicográfico (definido por $0 < 1$), y sea $m = n \cdot \lceil \log n \rceil$. Por ejemplo, si $n = 5$, entonces $P=\{00000$, $00001$, $00010$, $\ldots$, $10110$, $10111$, $11000 \}$ y $m = 15$.
+\end{minipage}
+\begin{enumerate}
+\item[(2.1)] \begin{minipage}[t]{\linewidth} $A$ escoge $m$ palabras distintas $x_1$, $\ldots$, $x_m$ desde el conjunto $P$, calcula $a_i = h(s \| x_i)$ para cada $i \in \{1, \ldots, m\}$, y envía $(1,a_1)$, $\ldots$, $(m,a_m)$ a $B$.
+\end{minipage}
+
+\item[(2.2)] $B$ escoge $m$ palabras distintas $y_1$, $\ldots$, $y_m$ desde el conjunto $P$, calcula $b_i = h(s \| y_i)$ para cada $i \in \{1, \ldots, m\}$, y envía $(1, b_1)$, $\ldots$, $(m, b_m)$ a $A$.
+\end{enumerate}
+\item[(3)] \begin{minipage}[t]{\linewidth}
+Sea $I = \{ (i,j) \mid a_i = b_j\}$. Si $I = \emptyset$, entonces el protocolo falla. En otro caso, sea $(k, \ell)$ el menor elemento en $I$ en el orden lexicográfico sobre $\{1, \ldots, m\}^2$ definido por $1 < 2 < \dots < m$.
+\end{minipage}
+\begin{enumerate}
+\item[(3.1)] $A$ establece como clave $x_{k}$.
+\item[(3.2)] $B$ establece como clave $y_\ell$ (que debería ser igual a $x_k$).
+\end{enumerate}
+\end{enumerate}
+\end{flushleft}
+En esta pregunta usted va a analizar la complejidad de este protocolo,
+para lo cual va a considerar las operaciones entre bits (suma, resta,
+comparación, etc.) como las operaciones básicas en los algoritmos, las
+cuales tienen costo 1. Por ejemplo, verificar si $u = v$ para dos
+palabras $u, v \in \{0,1\}^n$ toma tiempo $n$ ya que se deben realizar
+$n$ operaciones de comparación entre bits. En el análisis a realizar a
+continuación debe suponer que $h^n(u \| v)$ se calcula en tiempo
+$O(n)$, lo cual es cierto para las funciones de hash usuales.
+\begin{enumerate}
+\item La llamada {\bf EstablecerClave}($1^n$) falla tanto si no se tiene un par $(i, j)$ tal que $a_i = b_j$ como si $x_k \neq y_\ell$ (las claves secretas establecidas por $A$ y $B$ son distintas). Demuestre que existe una función despreciable $f(n)$ tal que:
+\begin{eqnarray*}
+\Pr(\text{{\bf EstablecerClave}($1^n$) falle}) & \leq & f(n).
+\end{eqnarray*}
+
+\item Suponga que {\bf EstablecerClave} no falla. Demuestre que $A$ y $B$ establecen una clave compartida en tiempo $O(n^2 \cdot \log^2 n)$.
+
+\item Suponga que {\bf EstablecerClave} no falla, y que un atacante trata de descubrir la clave compartida entre $A$ y $B$. Suponga que el atacante es exitoso en el sentido de que logra construir un algoritmo (no aleatorizado) $\mathcal{A}$ que dado $s, u_1, u_2, v \in \{0,1\}^n$ tal que $|\{ u \in \{0, 1\}^n \mid u_1 \leq u \leq u_2 \}| = n^2$, genera $u \in \{0,1\}^n$ que satisface $h(s \| u) = v$ y $u_1 \leq u \leq u_2$ siempre que dicho $u$ exista, y retorna $\bot$ si dicho $u$ no existe. Para la construcción anterior $\mathcal{A}$ realiza $o(n^3)$ operaciones, donde $\leq$ es el orden lexicográfico sobre $\{0,1\}^n$ definido por $0 < 1$. Demuestre que esto lleva a una contradicción puesto que implicaría que la familia de funciones $\{h^n\}_{n \in \mathbb{N}}$ no es puzzle friendly.
+
+
+\end{enumerate}
+
+\medskip
+
+\paragraph{Corrección.}
+La asignación de puntajes para cada pregunta de este problema es la siguiente.
+\begin{itemize}
+\item[(a)] El puntaje máximo en esta pregunta es 2 puntos. Se obtiene un 1 punto por demostrar correctamente que la probabilidad de que $I$ sea vacío es despreciable, y se obtiene 1 punto por demostrar correctamente que la probabilidad de que $x_k \neq y_\ell$ es despreciable.
+
+\item[(b)] El puntaje máximo en esta pregunta es 2 puntos. Se obtiene 1 punto si se entrega una demostración de que $A$ y $B$ establecen una clave compartida en tiempo $O(n^2 \cdot \log^2 n)$, pero esta demostración está incompleta o tiene errores menores. Se obtiene 2 puntos en esta pregunta si se entrega una demostración completa y correcta de que $A$ y $B$ establecen una clave compartida en tiempo $O(n^2 \cdot \log^2 n)$.
+
+\item[(c)] El puntaje máximo de esta pregunta es 2 puntos. Se obtiene 1 punto si se entrega una idea de cómo la existencia del algoritmo $\mathcal{A}$ implica que la familia de funciones $\{h^n\}_{n \in \mathbb{N}}$ no es puzzle friendly, pero esta idea no está correctamente formalizada como una demostración. Se obtiene 2 puntos en esta pregunta si se demuestra correctamente que la existencia del algoritmo $\mathcal{A}$ implica que la familia de funciones $\{h^n\}_{n \in \mathbb{N}}$ no es puzzle friendly. 
+\end{itemize}
+

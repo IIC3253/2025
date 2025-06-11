@@ -1,0 +1,51 @@
+%!TEX root = ../main/main.tex
+
+Sea $(\textit{Gen}, h)$ una función de hash tal que $\textit{Gen}(1^n) = n$ y  $h^n : \{0,1\}^* \to \{0,1\}^n$. El siguiente juego es utilizado para definir la propiedad de que $(\textit{Gen}, h)$ es resistente a modificaciones en la pre-imagen.
+
+{\bf PreImageModification($1^n$)}
+\begin{itemize}
+\item El atacante define un algoritmo de tiempo polinomial $\mathcal{A}:\{0,1\}^*\rightarrow\{0,1\}^*$ tal que para todo $x \in \{0,1\}^*$: $x$ es un prefijo de $\mathcal{A}(x)$ y el largo de $\mathcal{A}(x)$ es mayor al largo de $x$.
+\item El atacante envía $\mathcal{A}$ al verificador.
+\item El verificador selecciona $x\in\{0, 1\}^n$ y envía $h^n(x)$ al adversario.
+\item El verificador selecciona al azar $b\in\{0, 1\}$.
+\begin{itemize}
+\item Si $b=0$, el verificador computa $y=h^n(\mathcal{A}(x))$.
+\item Si $b=1$, el verificador elige al azar $y\in\{0,1\}^n$.
+\end{itemize}
+\item El verificador envía $y$ al adversario.
+\item El adversario elige $b'\in\{0,1\}$, y gana si $b=b'$.
+\end{itemize}
+Decimos que una función de hash es resistente a modificaciones de pre-imagen si es que no existe un adversario que funcione en tiempo polinomial (en $n$) y que gane el juego {\bf PreImageModification($1^n$)} con una probabilidad no despreciable.\footnote{Al igual que para los juegos vistos en clases, esto significa que el adversario no puede ganar {\bf PreImageModification($1^n$)} con una probabilidad $\frac{1}{2} + f(n)$, donde $f(n)$ es una función no despreciable.}
+\begin{enumerate}
+
+\item Demuestre que las funciones de hash basadas en la construcción de Merkle-Damgård vista en clases no son seguras frente a modificaciones de pre-imagen. En particular, para esta construcción considere la función de padding vista en clases, la cual es definida de la siguiente forma. Dado un mensaje $m$, sea $\ell = |m| \text{ mod } n$, y sea $m_1 \in \{0,1\}^n$ la representación como string binario del número $|m| \text{ mod } 2^n$. Si $\ell = 0$, entonces $\textit{Pad}(m) = m \| m_1$. Y si $\ell > 0$, entonces $\textit{Pad}(m) = m \| 1 0^{n - \ell - 1} \| m_1$.
+
+
+
+\item Programe en Python un adversario que gane este juego para la función \texttt{SHA256}. Específicamente, deberá entregar un archivo \texttt{pregunta2\_b.py} que contenga dos funciones:
+\begin{itemize}
+\item \texttt{alg(bytes) -> bytes}. Esta función representa el algoritmo $\mathcal{A}$ que utilizará el adversario para ganar el juego definido más arriba para el caso de \texttt{SHA256}.
+\item \texttt{adv(z: bytes, y: bytes) -> bool}. Esta función representa a su adversario que, habiendo recibido $z=h(x)$ e $y$ (teniendo $x,y,z\in\{0,1\}^{256}$), deberá retornar verdadero si y sólo si $y=\texttt{SHA256}(\texttt{alg}(x))$.
+\end{itemize}
+
+\end{enumerate}
+
+\medskip
+
+\paragraph{Corrección.}
+La asignación de puntajes para cada pregunta de este problema es la siguiente.
+\begin{itemize}
+\item[(a)]
+\begin{itemize}
+	\item[]\textbf{1 punto.} Menciona que las funciones de hash basadas en la construcción de Merkle-Dåmgard no son resistentes a modificaciones de pre-imagen debido a ataques de extensión de largo, pero no detalla cómo funcionan dichos ataques ni por qué implican que las funciones no son resistentes a modificación de pre-imagen.
+	\item[]\textbf{2 puntos.} Menciona que las funciones de hash basadas en la construcción de Merkle-Dåmgard son susceptibles a ataques de extensión de largo y demuestra que esto implica que por lo tanto no son resistentes a modificaciones de pre-imagen. Sin embargo, no muestra en detalle cómo se construyen estos ataques de extensión de largo. 
+	\item[]\textbf{3 puntos.} Demuestra que las funciones de hash basadas en la construcción de Merkle-Dåmgard son susceptibles a ataques de extensión de largo, mostrando una construcción completa de estos ataques. También demuestra correctamente que las funciones de hash susceptibles a estos ataques no son resistentes a modificaciones de pre-imagen.
+\end{itemize}
+
+\item[(a)]
+\begin{itemize}
+	\item[]\textbf{1 punto.} La función \texttt{alg} entrega en la mayoría de los casos una modificación de la pre-imagen que permitiría al atacante ganar el juego, pero la función \texttt{adv} en la mayoría de los casos no distingue cuándo \texttt{y} es igual a \texttt{SH256(alg(x))}.
+	\item[]\textbf{2 puntos.} La función \texttt{alg} entrega en la mayoría de los casos una modificación de la pre-imagen que permitiría al atacante ganar el juego, y la función \texttt{adv} efectivamente distingue, en la mayoría de los casos, cuándo \texttt{y} es igual a \texttt{SH256(alg(x))}.
+	\item[]\textbf{3 puntos.} La función \texttt{alg} entrega siempre una modificación de la pre-imagen que permitiría al atacante ganar el juego, y la función \texttt{adv} efectivamente distingue, para todos los casos, cuándo \texttt{y} es igual a \texttt{SH256(alg(x))}.
+\end{itemize}
+\end{itemize}
