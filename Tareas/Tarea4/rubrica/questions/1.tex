@@ -1,0 +1,76 @@
+%!TEX root = ../main/main.tex
+
+En esta pregunta usted deberá implementar el protocolo de firmas de
+anillo visto en clases, el cual utiliza las firmas de Schnorr también
+vistas en clases.
+
+Recuerde que una firma de Schnorr se define de la siguiente
+forma. Suponga que los siguiente objetos son públicos: un grupo $(G,
+*)$, un elemento $g \in G$, un número primo $q$ tal que $|\langle
+g\rangle| = q$ y una función de hash $h$. La clave secreta de un
+usuario $A$ es un número $x_A \in \{1, \ldots, q -1\}$ y su clave
+pública es el elemento del grupo $y_A = g^{x_A}$. Si el
+usuario $A$ quiere generar una firma de Schnorr para un mensaje $m$,
+entonces debe realizar los siguientes pasos:
+\begin{enumerate}
+\item Genera al azar $r \in \{1, \ldots, q-1\}$ y calcula $c = h(g^r \| m)$ considerando $g^r$ como un string.
+
+\item Calcula $s = r + c \cdot x_A$ interpretando $c$ como un número natural.
+
+\item Define $(c, s)$ como la firma de Schnorr de $m$.
+\end{enumerate}
+Un usuario $B$ puede verificar si $(c,s)$ es una firma del mensaje
+$m$ hecha por el usuario $A$ chequeando que la siguiente condición se
+cumpla:
+\begin{align*}
+c \ = \ h(g^s * y_A^{q-c} \| m).
+\end{align*}
+Utilizando este protocolo, mostraremos cómo se define una firma de anillo para un caso particular. Usted deberá generalizarlo. Suponga que tiene un grupo formado por los usuarios $1$, $2$ y $3$, donde la clave secreta del usuario $i$ es $x_i$ y la clave pública del usuario $i$ es $y_i = g^{x_i}$. Si el usuario $1$ quiere generar una firma de anillo de un mensaje $m$, entonces debe realizar los siguientes pasos:
+\begin{enumerate}
+\item Genera al azar $r_1 \in \{1, \ldots, q-1\}$ y calcula $c_2 = h(g^{r_1} \| m)$.
+
+\item Genera al azar $s_2 \in \{1, \ldots, q-1\}$.
+
+\item Calcula $g^{r_2} = g^{s_2} * y_2^{q - c_2}$ y $c_3 = h(g^{r_2} \| m)$. Note que en este paso el usuario 1 no calcula $r_2$, sólo calcula $g^{s_2} * y_2^{q - c_2}$ y sabe que esto es igual a un elemento del grupo de la forma $g^{r_2}$. Además, el usuario 1 utiliza $g^{r_2}$ para calcular $c_3$.
+
+\item Genera al azar $s_3 \in \{1, \ldots, q-1\}$.
+
+\item Calcula $g^{r_3} = g^{s_3} * y_3^{q - c_3}$ y $c_1 = h(g^{r_3} \| m)$.
+
+\item Calcula $s_1 = r_1 + c_1 \cdot x_1$. Note que este paso lo puede realizar el usuario $1$ ya que conoce la clave secreta $x_1$.
+
+\item Saca al azar $i\in\{1,2,3\}$ y define $(s_1, s_2, s_3, c_i, i)$ como la firma de anillo de $m$.
+\end{enumerate} 
+Supongamos que $i=2$. Si un usuario $B$ quiere verificar que $(s_1, s_2, s_3, c_2, 2)$ es una firma de anillo válida para el grupo
+formado por los usuarios $1$, $2$ y $3$, entonces debe hacer lo siguiente:
+
+\begin{enumerate}
+	\item Calcula $c_3=h(g^{s_2} * y_2^{q - c_2} \| m)$
+	\item Calcula $c_1=h(g^{s_3} * y_3^{q - c_3} \| m)$
+	\item Revisa si $h(g^{s_1} * y_1^{q - c_1} \| m)$ igual al valor $c_2$ de la firma.
+\end{enumerate}
+Note que si esta última condición es cierta, entonces $B$ sabe
+que la firma es válida, pero no sabe cuál de los usuarios firmó el
+mensaje $m$ (ya que el valor de $i$ se sacó al azar).
+
+Para responder esta pregunta, usted debe entregar el notebook \texttt{pregunta1.ipynb} habiendo completado exclusivamente los bloques marcados con \texttt{\#\#\#\#\# POR COMPLETAR \#\#\#\#\#}. Su notebook deberá correr de principio a fin. Además, se evaluará con un programa externo su implementación de las clases \texttt{Signer} y \texttt{Verifier}.
+
+\medskip
+
+\paragraph{Corrección.} Para revisar esta tarea se van a ejecutar tres conjuntos de pruebas, en los cuales consideramos el código que usted entregó en su tarea y el código en la solución de la tarea:
+\begin{itemize}
+\item El primer conjunto de pruebas se utiliza para determinar si la clase \texttt{RingSetup} de la solución de la tarea funciona bien con las clases \texttt{Signer} y \texttt{Verifier} entregadas en su tarea.
+
+\item El segundo conjunto de pruebas se utiliza para ver si la clase \texttt{Signer} entregada en su tarea genera firmas válidas de acuerdo a la clase \texttt{Verifier} de la solución de la tarea.
+
+\item El tercer conjunto de pruebas se utiliza para determinar si la clase \texttt{Verifier} entregada en su tarea verifica correctamente firmas generadas por la clase \texttt{Signer} de la solución de la tarea.
+\end{itemize}
+Cada conjunto de pruebas consiste de 4 casos distintos:
+\begin{itemize}
+\item Una firma correcta para el grupo $\mathbb{Z}_p^*$.
+\item Una firma incorrecta para el grupo $\mathbb{Z}_p^*$.
+
+\item \begin{sloppypar} Una firma correcta para el grupo definido por la curva elíptica P-256 (\url{https://neuromancer.sk/std/nist/P-256}). \end{sloppypar}
+\item Una firma incorrecta para el grupo definido por la curva elíptica P-256.
+\end{itemize}
+Por cada test ejecutado correctamente obtiene 5 décimas para la nota final de la tarea.
