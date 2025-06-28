@@ -17,4 +17,16 @@ Para encontrar la vulnerabilidad y programar su función, debe usar un programa 
 
 \medskip
 
-\paragraph{Corrección.} TBD
+\paragraph{Corrección.} En esta pregunta se obtiene un punto base por que su programa tenga el setup correcto. Esto significa que si su programa es ejecutado en un ambiente con las variables correctas, intenta obtener el mac para un mensaje interactuando correctamente con el servicio. Si es necesario modificar su programa para que se ejecute correctamente entonces usted no obtendrá ese punto base. A lo anterior se le suma:
+
+\begin{itemize}
+	\item[]\textbf{1 punto.} El programa hace algunos requests al servicio de logs pero evidentemente no está explotando una vulnerabilidad. Por ejemplo, el programa está intentando obtener el MAC por fuerza bruta o tratando de calcular el mac sacando la llave secreta de alguna variable de entorno.
+	\item[]\textbf{2.5 puntos.} El programa hace requests al servicio de logs tratando de explotar una vulnerabilidad pero, por errores en su lógica interna, está lejos de obtener un MAC válido.
+	\item[]\textbf{4 puntos.} El programa explota una vulnerabilidad, pero
+		\begin{itemize}
+			\item por algún error menor, no obtiene un tag correcto (por ejemplo el último byte no es correcto); o
+			\item obtiene el tag correcto en al menos dos de tres intentos, pero demorando más de 10 minutos en encontrarlo; o
+			\item obtiene el tag correcto en uno de tres intentos demorando menos de 10 minutos.
+		\end{itemize}
+	\item[]\textbf{5 puntos.} El programa explota correctamente una vulnerabilidad, ya sea un timing attack o un ataque enviando tags de largo incorrecto. Obtiene el tag correcto en al menos 2 de 3 intentos.
+\end{itemize}
