@@ -1,0 +1,80 @@
+%!TEX root = ../main/main.tex
+
+En esta pregunta estudiaremos un sistema criptográfico de clave pública que es definido a partir de un problema NP-completo. Para esto considere el problema SUBSET-SUM definido de la siguiente forma. La entrada de SUBSET-SUM es un conjunto $S$ de números naturales y un número natural $b$, y la pregunta responder es si existe $I \subseteq S$ tal que:
+\begin{eqnarray*}
+  \sum_{a \in I} a &=& b.
+\end{eqnarray*}
+Por ejemplo, si $S_1 = \{1, 2, 3, 4, 5\}$ y $b_1 = 7$, entonces tanto $\{2, 5\}$ como $\{1 ,2, 4\}$ son soluciones del problema. Por el contrario, si $S_2 = \{2, 4, 6, 8\}$ y $b_2 = 5$, entonces el problema no tiene solución. Es conocido que SUBSET-SUM es un problema NP-completo, por lo que se cree que no existe un algoritmo de tiempo polinomial que lo solucione.
+
+En el sistema criptográfico basado en SUBSET-SUM, un usuario establece sus claves pública y secreta a través del siguiente protocolo, suponiendo que el espacio de mensaje es \mbox{${\cal M} = \{0,1\}^n$}.
+\begin{enumerate}
+\item[(1)] Se escoge un conjunto $S = \{w_1, \ldots, w_n\}$ de números naturales tal que $S$ es súper creciente, vale decir, para cada $k \in \{2, \ldots, n\}$ se tiene que:
+  \begin{eqnarray*}
+    \sum_{i = 1}^{k-1} w_i &<& w_k.
+  \end{eqnarray*}
+  Por ejemplo, $S_1 = \{1, 2, 4, 8\}$ es súper creciente, mientras que $S_2 = \{1, 2, 3, 4\}$ no es súper creciente.
+
+
+\item[(2)] Se escogen números naturales $q, r$ tales que $\textit{MCD}(q, r) = 1$ y 
+  \begin{eqnarray*}
+    \sum_{i=1}^n w_i &<& q.
+  \end{eqnarray*}
+
+  \begin{sloppypar}
+\item[(3)] Se construye el conjunto $T = \{t_1, \ldots, t_n\}$ de números naturales tales que \mbox{$t_i = (w_i \cdot r) \text{ mod } q$} para cada $i \in \{1, \ldots, n\}$.
+  \end{sloppypar}
+ 
+\item[(4)] Se define la clave secreta como $(S,q,r)$ y la clave pública como $T$.
+\end{enumerate}
+Las funciones de cifrado y descifrado son definidas de la siguiente forma, considerando que la clave pública de un usuario $A$ es $P_A = T$ y la clave secreta de $A$ es $S_A = (S,q,r)$. Suponga que $m = b_1 \cdots b_n$ es un mensaje, donde $b_i \in \{0,1\}$ para cada $i \in \{1, \ldots, n\}$. Entonces
+\begin{eqnarray*}
+  \textit{Enc}_{P_A}(m) &=& \sum_{i = 1}^n b_i \cdot t_i.
+\end{eqnarray*}
+Observe que el texto cifrado de un mensaje es un número natural.
+
+Por otro lado, la función de descifrado $\textit{Dec}_{S_A}$ se define de la siguiente forma. Dado un texto cifrado $c \in \mathbb{N}$, sea $d = (s \cdot c) \text{ mod } q$, donde $s$ es un número natural tal que $r \cdot s \equiv 1 \mod q$ (sabemos que este número existe puesto que $\textit{MCD}(q,r) = 1$). Además, sean $s_1$, $\ldots$, $s_n$ tales que $s_i \in \{0,1\}$ para cada $i \in \{1, \ldots, n\}$ y:
+\begin{align}
+  \sum_{i=1}^n s_i \cdot w_i \ = \ d. \tag{\dag} \label{eq-fin}
+\end{align}
+Entonces $\textit{Dec}_{S_A}(c) = s_1 \cdots s_n$.
+
+A continuación usted debe demostrar que el protocolo anterior es correcto y puede ser implementado en tiempo polinomial, para lo cual debe responder las siguientes preguntas.
+\begin{itemize}
+\item[(a)] Demuestre que, dado un conjunto $S$ de números naturales que es súper creciente y un número $b$, existe a lo más un conjunto $I \subseteq S$ tal que:
+  \begin{eqnarray*}
+    \sum_{a \in I} a &=& b.
+  \end{eqnarray*}
+
+\item[(b)] Construya un algoritmo polinomial tal que, dado un conjunto $S$ de números naturales que es súper creciente y un número $b$, verifica si existe $I \subseteq S$ tal que:
+  \begin{eqnarray*}
+    \sum_{a \in I} a &=& b.
+  \end{eqnarray*}
+  Este algoritmo debe además construir $I$ si tal conjunto existe. Note que de (a) y (b) se concluye que $\textit{Dec}_{S_A}$ está bien definido, si existe una solución para la ecuación \eqref{eq-fin}, y puede ser implementado en tiempo polinomial.
+
+\item[(c)] Sea $T = \{t_1, ..., t_n\}$ definido como en el paso (3) del protocolo. Demuestre que $t_i \neq t_j$ para $i,j \in \{1, \ldots, n\}$ tal que $i \neq j$. Note que de este se deduce que $T$ contiene $n$ elementos distintos y $\textit{Enc}_{P_A}$ está bien definido.
+
+\item[(d)] Demuestre que para todo mensaje $m \in \{0,1\}^n$, se tiene que $\textit{Dec}_{S_A}(\textit{Enc}_{P_A}(m)) = m$.
+\end{itemize}
+
+
+\medskip
+
+\paragraph{Corrección.} La asignación de puntajes para cada pregunta de este problema es la siguiente.
+\begin{itemize}
+\item[(a)] El puntaje máximo en esta pregunta es 1.5 puntos. Se obtiene 0.7 puntos si se entrega una versión de la demostración con algunos errores menores, y se obtiene el puntaje completo si la demostración no tiene errores.
+
+\item[(b)] El puntaje máximo en esta pregunta es 1.5 puntos. Se obtiene 0.5
+puntos si se entrega un algoritmo que funciona en tiempo polinomial
+pero no se explica por qué es correcto, se obtiene 1 punto si se
+entrega un algoritmo que funciona en tiempo polinomial y se explica
+por qué es correcto, pero no se demuestra que se cumple esto, y se
+obtiene 1.5 puntos si se entrega un algoritmo que funciona en tiempo
+polinomial y se demuestra que es correcto.
+
+
+\item[(c)] El puntaje máximo en esta pregunta es 1.5 puntos. Se obtiene 0.7 puntos si se entrega una versión de la demostración con algunos errores menores, y se obtiene el puntaje completo si la demostración no tiene errores.
+
+\item[(d)] El puntaje máximo en esta pregunta es 1.5 puntos. Se obtiene 0.7 puntos si se da una idea de por qué es cierto que $\textit{Dec}_{S_A}(\textit{Enc}_{P_A}(m)) = m$ pero no se entrega una demostración completa de esta propiedad, y se obtiene el puntaje completo si se demuestra correctamente que esta propiedad es cierta.
+
+\end{itemize}
+

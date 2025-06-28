@@ -1,0 +1,20 @@
+%!TEX root = ../main/main.tex
+
+En esta pregunta usted debe escribir un programa para atacar a un servicio de almacenamiento de logs. Dicho servicio ha sido protegido utilizando HMAC con MD5.
+En particular, cada vez que se envía el mensaje \texttt{log}, se debe enviar también \texttt{HMAC-MD5(k, log)}, donde \texttt{k} es una llave que usted desconoce. La implementación de este servicio tiene una vulnerabilidad que usted deberá explotar.
+
+Deberá entregar un archivo llamado \texttt{pregunta1.py} que contenga una función \texttt{get\_tag(log: string) -> string} que retorne el tag correspondiente a \texttt{log}, esto es, \texttt{HMAC-MD5(k, log)}. Vale decir, debe explotar la vulnerabilidad en la implementación de manera tal de poder generar un tag válido para cualquier mensaje \texttt{log} dado como parámetro a la función \texttt{get\_tag}.
+
+Su programa debe:
+\begin{itemize}
+  \item Obtener la url y puerto del servicio desde las variables de entorno \texttt{LOG\_SERVICE\_URL} y \texttt{LOG\_SERVICE\_PORT}, respectivamente.
+  \item Demorar, en cada ejecución de \texttt{get\_tag}, no más de 10 minutos en el computador de un ayudante (esto es más que suficiente).
+\end{itemize}
+
+Para encontrar la vulnerabilidad y programar su función, debe usar un programa que se encuentra en el repositorio del curso junto a este enunciado. Al ejecutar dicho programa, el servicio de logs quedará disponible en la url \texttt{http://localhost} bajo el puerto \texttt{8080}. Este servicio recibe logs en el path \texttt{send\_log} con \texttt{\{"log": string, "tag": string\}} en el body de un POST. El servicio usa como llave para calcular el \texttt{MAC} la variable de entorno \texttt{KEY} en caso de estar presente. De lo contrario usará un valor por defecto. 
+
+
+
+\medskip
+
+\paragraph{Corrección.} TBD
