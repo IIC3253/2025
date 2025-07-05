@@ -1,0 +1,9 @@
+Al usar RSA como sistema criptográfico, tenemos el problema de que si
+encriptamos el mismo mensaje dos veces, obtenemos el mismo texto
+cifrado. Para evitar este problema, suponiendo que las llaves pública
+y secreta son $P_A=(e, N)$ y $S_A=(d, N)$, respectivamente, se
+encripta un mensaje $m \in \{0, \ldots, N-1\}$ seleccionando al azar un número
+$r \in \{1, \ldots, N-1\}$ que sea primo relativo con $N$, y
+definiendo $\textit{Enc}_{P_A}(m) = ((m \cdot r)^e \text{ mod } N,\
+r) = (c,r)$. Explique cómo se puede desencriptar $(c,r)$ teniendo acceso a
+la llave secreta $S_A$.

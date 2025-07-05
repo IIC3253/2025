@@ -1,0 +1,6 @@
+``En la base de datos de un servicio web generalmente se encuentran
+encriptadas las contraseñas de los usuarios.'' ¿Es correcta esta
+afirmación? Justifique su respuesta.
+
+\paragraph{Solución.} No, en la base de datos de un servicio web sería muy extraño encontrar contraseñas encriptadas. Lo que se encuentra es un checksum (generalmente en forma de PBKDF o un hash salteado) que permite, dada la contraseña, verificar que esa contraseña es correcta. Notar que esto es distinto de tener las contraseñas encriptadas, puesto que a partir de lo que hay en la base de datos no es posible ``desencriptar'' las contraseñas de los usuarios. 
+

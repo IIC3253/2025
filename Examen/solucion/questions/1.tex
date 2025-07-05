@@ -1,0 +1,7 @@
+Una HMAC puede ser definida de la siguiente forma $\textit{HMAC}(k, m) = h(k \|
+m)$, donde $k$ es la clave secreta compartida por dos usuarios, $m$ es el
+mensaje que se necesita autentificar, y $h$ es una función de
+hash. ¿Puede ser esta considerada una buena HMAC si $h$ es la función de
+hash SHA-256?
+
+\paragraph{Solución.} No, si $h$ es SHA-256, la función definida como $\textit{HMAC}(k,m)=h(k\|m)$ no es un buen hash-based message authentication code, ya que SHA-256 es susceptible a ataques de extensión de largo. Por lo tanto, sin necesidad de tener acceso a la llave $k$, dado $\textit{HMAC}(k,m)$ es posible construir $\textit{HMAC}(k,m')$ donde $m$ es un prefijo de $m'$.

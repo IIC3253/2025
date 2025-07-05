@@ -1,0 +1,6 @@
+Suponga dado un grupo $G$, un generador $g$ y un número natural $q$
+tal que $|\langle g \rangle| = q$. Explique para qué sirve el
+protocolo de Diffie-Hellman y muestre una ejecución de este protocolo
+para dos usuarios $A$ y $B$.
+
+\paragraph{Solución.} El protocolo de Diffie-Hellman sirve para compartir una llave simétrica en un canal público. Una ejecución se ve de la siguiente forma: $A$ genera un número secreto $x\in\{1,\ldots,q\}$ y envía a $B$ el elemento $g^x$. $B$ genera un número secreto $y\in\{1,\ldots,q\}$ y envía a $A$ el elemento $g^y$. La llave simétrica compartida será $g^{x\cdot y}$, que $A$ calcula como $(g^y)^x$ y $B$ calcula como $(g^x)^y$.
